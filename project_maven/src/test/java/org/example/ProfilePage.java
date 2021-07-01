@@ -1,0 +1,39 @@
+package org.example;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class ProfilePage {
+
+    public WebDriver driver;
+    public ProfilePage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver; }
+
+
+    private WebElement userMenu;
+    //private WebElement logoutBtn;
+
+    public void PageObjectWithoutPageFactory(WebDriver driver){
+              this.driver = driver;
+        driver.get("https://passport.yandex.ru/profile");
+        userMenu = driver.findElement(By.xpath("//*[contains(@class, 'user-account__name')]"));
+        WebElement logoutBtn = driver.findElement(By.xpath("//*[contains(@class, 'menu__item menu__item_type_link legouser__menu-item legouser__menu-item_action_exit')]"));
+
+              userMenu.click();
+        logoutBtn.click();
+    }
+
+
+    public String getUserName() {
+        this.driver = driver;
+        userMenu = driver.findElement(By.xpath("//*[contains(@class, 'user-account__name')]"));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'user-account__name')]")));
+        String userName = userMenu.getText();
+        return userName; }
+
+}
